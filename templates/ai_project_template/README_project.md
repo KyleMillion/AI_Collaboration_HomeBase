@@ -17,5 +17,6 @@ This project was initiated using the 'AI Project Template' from our AI Collabora
 
 -   Collaboration Charter: `../../docs/methodologies/OUR_COLLABORATION_CHARTER.md`
 -   Project Checklist: `CHECKLIST.md`
+-   Aegis Collaboration Protocol (if applicable): `../../docs/methodologies/AEGIS_COLLABORATION_PROTOCOL.md`
 
 (Add other relevant links as the project develops, e.g., data sources, model registries, experiment tracking.) 
