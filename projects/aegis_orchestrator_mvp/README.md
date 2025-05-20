@@ -1,6 +1,6 @@
 # Aegis Orchestrator MVP — Phase 0 Setup
 
-[![CI](https://github.com/YOUR_ORG/YOUR_REPO/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR_ORG/YOUR_REPO/actions/workflows/ci.yml)
+[![CI](https://github.com/KyleMillion/AI_Collaboration_HomeBase/actions/workflows/ci.yml/badge.svg)](https://github.com/KyleMillion/AI_Collaboration_HomeBase/actions/workflows/ci.yml)
 
 **This project is managed under the AI Collaboration Home Base framework.**
 -   **Collaboration Guidelines:** See `../../docs/methodologies/OUR_COLLABORATION_CHARTER.md`
