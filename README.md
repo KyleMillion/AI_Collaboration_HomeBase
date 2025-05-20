@@ -8,7 +8,7 @@ The primary goal of this Home Base is to:
 - Provide a structured and organized environment for project development.
 - Centralize shared documentation, templates, and best practices.
 - Streamline the initiation and management of new projects.
-- Ensure consistency and adherence to our agreed-upon methodologies (see `docs/methodologies`).
+- Ensure consistency and adherence to our agreed-upon methodologies (see `docs/methodologies/OUR_COLLABORATION_CHARTER.md`).
 
 ## Structure Overview
 
