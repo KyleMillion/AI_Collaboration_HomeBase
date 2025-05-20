@@ -1,0 +1,6 @@
+langchain==0.2.0
+autogen-ai==0.3.0
+prefect==2.14.0
+prometheus_client==0.19.0
+fastapi==0.110.0
+openai>=1.0.0

@@ -1,0 +1,26 @@
+name: CI
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11" # As specified by Aegis
+      
+      - name: Install dependencies
+        run: pip install -r projects/aegis_orchestrator_mvp/requirements.txt
+      
+      - name: Run tests
+        run: pytest -q
+        working-directory: ./projects/aegis_orchestrator_mvp # Ensure pytest runs in the project subfolder context if tests expect it
+
+      - name: Install Black
+        run: pip install black==24.4.2 # Pinned version as per Aegis
+      
+      - name: Check formatting with Black
+        run: black --check src tests
+        working-directory: ./projects/aegis_orchestrator_mvp # Run black in the project subfolder 

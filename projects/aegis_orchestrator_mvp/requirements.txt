@@ -1,0 +1,12 @@
+# Aegis Orchestrator MVP
+pyautogen>=0.2.0,<0.3.0
+fastapi==0.111.0
+langchain==0.2.0
+langchain-community>=0.2.0,<0.3.0
+openai==1.67.0
+pandas>=2.0.0
+prefect>=3.4.2,<4.0.0
+prometheus_client>=0.20.0
+python-dotenv>=1.0.0
+requests>=2.31.0
+slack_sdk>=3.35.0 

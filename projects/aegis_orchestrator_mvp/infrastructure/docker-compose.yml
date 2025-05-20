@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./infrastructure/prometheus/:/etc/prometheus/
+    ports:
+      - "9090:9090"
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+  prefect:
+    image: prefecthq/prefect:2-latest
+    environment:
+      - PREFECT_API_HOST=http://prefect:4200 # Corrected to prefect service name
+      - PREFECT_UI_URL=http://localhost:4200 # Optional: if accessing UI via localhost
+      - PREFECT_SERVER_API_HOST=0.0.0.0 # To allow connections to API from host
+    ports:
+      - "4200:4200"
+  n8n:
+    image: n8nio/n8n:latest
+    environment:
+      - WEBHOOK_TUNNEL_URL=http://localhost # Important for local development if n8n needs to call back to itself or other local services through a tunnel
+      - GENERIC_WEBHOOK_URL=http://localhost:5678/webhook/ # Example, adjust if needed by flows
+      - PYTHON_EXECUTABLE=/usr/local/bin/python # Ensure this matches python in the n8n container if using Execute Command node
+    ports:
+      - "5678:5678"
+    volumes:
+      - ./scripts:/workspace/scripts # Added volume for scripts
+    # volumes:
+      # - ./n8n_data:/home/node/.n8n # Optional: To persist n8n data
+    depends_on:
+      - prefect # Ensuring Prefect server is up before n8n
+    # depends_on:
+      # - prefect-server # If n8n needs to interact with Prefect API directly 

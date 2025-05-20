@@ -1,0 +1,9 @@
+global:
+  scrape_interval: 15s
+scrape_configs:
+  - job_name: 'prefect'
+    static_configs:
+      - targets: ['prefect:4200'] # Targets prefect service name
+  - job_name: 'aegis_orchestrator'
+    static_configs:
+      - targets: ['host.docker.internal:8000'] # For metrics exposed by the python app on host 

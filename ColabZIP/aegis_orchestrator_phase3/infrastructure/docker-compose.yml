@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./infrastructure/prometheus/:/etc/prometheus/
+    ports:
+      - "9090:9090"
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+  prefect:
+    image: prefecthq/prefect:2-latest
+    environment:
+      - PREFECT_API_HOST=http://prefect:4200
+    ports:
+      - "4200:4200"
