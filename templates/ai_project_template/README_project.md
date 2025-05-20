@@ -19,4 +19,8 @@ This project was initiated using the 'AI Project Template' from our AI Collabora
 -   Project Checklist: `CHECKLIST.md`
 -   Aegis Collaboration Protocol (if applicable): `../../docs/methodologies/AEGIS_COLLABORATION_PROTOCOL.md`
 
-(Add other relevant links as the project develops, e.g., data sources, model registries, experiment tracking.) 
+(Add other relevant links as the project develops, e.g., data sources, model registries, experiment tracking.)
+
+---
+This project template is part of the AI Collaboration Home Base framework.
+© 2024 IntuiTek¹, W. Kyle Million. All Rights Reserved. 

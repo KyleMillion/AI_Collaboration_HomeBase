@@ -19,4 +19,8 @@ This project was initiated using the 'Traditional App Template' from our AI Coll
 -   Project Checklist: `CHECKLIST.md`
 -   Aegis Collaboration Protocol (if applicable): `../../docs/methodologies/AEGIS_COLLABORATION_PROTOCOL.md`
 
-(Add other relevant links as the project develops, e.g., design documents, issue trackers.) 
+(Add other relevant links as the project develops, e.g., design documents, issue trackers.)
+
+---
+This project template is part of the AI Collaboration Home Base framework.
+© 2024 IntuiTek¹, W. Kyle Million. All Rights Reserved. 

@@ -99,4 +99,7 @@ As your AI Partner within this environment, I do not directly execute these `cur
 -   **Help Formulate Queries/Commands:** I can assist in crafting effective queries for `ai-web` or `ai-repo`, or help structure commands for other tools.
 -   **Process Outputs:** You can share the outputs from these tools with me, and I will integrate that information into our project context, analysis, and decision-making.
 
-This collaborative approach ensures we leverage the full power of the `cursor-tools` suite effectively. This guide will be updated if more details or tools within the suite are specified. 
+This collaborative approach ensures we leverage the full power of the `cursor-tools` suite effectively. This guide will be updated if more details or tools within the suite are specified.
+
+---
+© 2024 IntuiTek¹, W. Kyle Million. All Rights Reserved. 

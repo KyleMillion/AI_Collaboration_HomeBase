@@ -23,4 +23,10 @@ The primary goal of this Home Base is to:
 
 Refer to `templates/` and the guidance in `docs/methodologies/` to initiate a new project within this framework.
 
+## Authorship and Credits
+
+This AI Collaboration Home Base framework, including its structure, methodologies (as detailed in `docs/methodologies/OUR_COLLABORATION_CHARTER.md`), project templates, and associated guides, was conceived and developed by **W. Kyle Million, Founder of IntuiTek¹**.
+
+All intellectual property rights related to this framework are held by IntuiTek¹, W. Kyle Million. For more details, please refer to the `LICENSE` file.
+
 *(This README will be expanded as we further define our processes.)* 

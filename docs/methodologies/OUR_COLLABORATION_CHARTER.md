@@ -339,3 +339,6 @@ Specific protocols for these interactions, including communication flows and dat
 ---
 
 This charter will be referenced in the main `README.md` of the Home Base.
+
+---
+© 2024 IntuiTek¹, W. Kyle Million. All Rights Reserved.

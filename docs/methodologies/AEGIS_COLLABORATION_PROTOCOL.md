@@ -50,4 +50,7 @@ Gemini is committed to:
 *   Highlighting any significant agreements, disagreements, or complementary points arising from Aegis's input to facilitate productive discussion and decision-making.
 *   Working in synergy with both our human partner and Aegis to achieve the project objectives outlined within the AI Collaboration Home Base framework.
 
-This protocol can be reviewed and updated as our collaborative processes evolve. 
+This protocol can be reviewed and updated as our collaborative processes evolve.
+
+---
+© 2024 IntuiTek¹, W. Kyle Million. All Rights Reserved. 
