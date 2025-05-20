@@ -1,6 +1,7 @@
 import os, smtplib
 from email.message import EmailMessage
 
+
 class EmailAPI:
     """SMTP email adapter (uses env credentials)."""
 

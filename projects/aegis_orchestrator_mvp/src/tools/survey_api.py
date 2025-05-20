@@ -1,5 +1,6 @@
 import os
 
+
 class SurveyAPI:
     """Adapter for Survey API. (STUB)"""
 
@@ -11,6 +12,11 @@ class SurveyAPI:
         action = params.get("action", "send_survey")
         survey_id = params.get("survey_id", "default_survey")
         recipient = params.get("recipient", "user@example.com")
-        print(f"[SurveyAPI STUB] Invoked action '{action}' for survey '{survey_id}' to '{recipient}'")
+        print(
+            f"[SurveyAPI STUB] Invoked action '{action}' for survey '{survey_id}' to '{recipient}'"
+        )
         # TODO: Implement actual Survey API interaction (e.g., SurveyMonkey, Google Forms)
-        return {"status": "ok", "detail": f"SurveyAPI STUB: action '{action}' for survey '{survey_id}' simulated."} 
+        return {
+            "status": "ok",
+            "detail": f"SurveyAPI STUB: action '{action}' for survey '{survey_id}' simulated.",
+        }

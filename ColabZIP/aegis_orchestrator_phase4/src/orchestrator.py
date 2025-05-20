@@ -1,4 +1,5 @@
 """Dynamic Orchestrator — converts task graph into Prefect flow and deploys."""
+
 import json, inspect, types, importlib.util, pathlib, uuid
 from typing import Dict
 from prefect import flow, task
@@ -10,7 +11,17 @@ from .metrics import REQUEST_COUNT, REQUEST_LATENCY
 # This is a simple approach; a more robust plugin system might be needed for many tools
 _TOOL_CLASSES = {}
 try:
-    from ..tools import okta_api, slack_api, crm_api, calendar_api, email_api, sql_tool, plot_api, survey_api
+    from ..tools import (
+        okta_api,
+        slack_api,
+        crm_api,
+        calendar_api,
+        email_api,
+        sql_tool,
+        plot_api,
+        survey_api,
+    )
+
     _TOOL_CLASSES = {
         "OktaAPI": okta_api.OktaAPI,
         "SlackAPI": slack_api.SlackAPI,
@@ -21,7 +32,7 @@ try:
         "PlotAPI": plot_api.PlotAPI,
         "SurveyAPI": survey_api.SurveyAPI,
         # Conceptual/Placeholder tools for now
-        "FormAPI": lambda: print("[Tool Stub] FormAPI invoked"), 
+        "FormAPI": lambda: print("[Tool Stub] FormAPI invoked"),
         "PingCheck": lambda: print("[Tool Stub] PingCheck invoked"),
         "PandasExec": lambda: print("[Tool Stub] PandasExec invoked"),
         "LLMCompose": lambda: print("[Tool Stub] LLMCompose invoked"),
@@ -42,8 +53,10 @@ def _make_task(task_spec):
     def generic():
         with REQUEST_LATENCY.labels(task_id).time():
             REQUEST_COUNT.labels(task_id).inc()
-            print(f"Executing task_id: {task_id} with agent: {agent_name} and tool(s): {tool_names}")
-            
+            print(
+                f"Executing task_id: {task_id} with agent: {agent_name} and tool(s): {tool_names}"
+            )
+
             if not tool_names:
                 print(f"  No tool specified for task {task_id}.")
                 return
@@ -62,7 +75,11 @@ def _make_task(task_spec):
                         # Simplistic parameter passing for now
                         # Assumes invoke method can handle missing params or uses defaults
                         print(f"  Invoking tool: {tool_name} with params: {params}")
-                        result = tool_instance.invoke(**params) if hasattr(tool_instance, 'invoke') else tool_instance()
+                        result = (
+                            tool_instance.invoke(**params)
+                            if hasattr(tool_instance, "invoke")
+                            else tool_instance()
+                        )
                         results.append({tool_name: result})
                         print(f"  Tool {tool_name} result: {result}")
                     except Exception as e:
@@ -72,7 +89,9 @@ def _make_task(task_spec):
                     print(f"  Tool {tool_name} not found in _TOOL_CLASSES.")
                     results.append({tool_name: {"error": "Tool not found"}})
             return results
+
     return generic
+
 
 def build_flow(graph: Dict):
     tasks = {}
@@ -84,24 +103,31 @@ def build_flow(graph: Dict):
         # naive linear execution preserve order
         for t in graph.get("tasks", []):
             tasks[t["id"]]()
+
     return dynamic_flow
+
 
 def deploy(graph: Dict, flows_dir: str = None):
     flow_obj = build_flow(graph)
     # Serialize as script file for Prefect CLI
     flows_dir = pathlib.Path(flows_dir or "flows")
     flows_dir.mkdir(parents=True, exist_ok=True)
-    file_path = flows_dir/ f"{graph.get('id','flow')}.py"
+    file_path = flows_dir / f"{graph.get('id','flow')}.py"
     source = inspect.getsource(flow_obj)
     with open(file_path, "w") as f:
         f.write(source)
     return file_path
+
+
 def _review_gate(instruction: str):
     @task(name="human_approval")
     def gate():
         score = risk.score_instruction(instruction)
         if risk.requires_review(score):
-            raise RuntimeError(f"✅ REVIEW REQUIRED — Risk score {score:.2f}. Escalate to human.")
+            raise RuntimeError(
+                f"✅ REVIEW REQUIRED — Risk score {score:.2f}. Escalate to human."
+            )
         else:
             print(f"[Review] Risk score {score:.2f} — auto‑approved.")
+
     return gate

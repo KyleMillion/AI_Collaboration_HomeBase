@@ -1,5 +1,6 @@
 """Initial Planner agent scaffold"""
 
+
 class Planner:
     """Decomposes natural-language directives into task graphs."""
 
@@ -8,7 +9,5 @@ class Planner:
         # For now, return a placeholder graph
         return {
             "instruction": instruction,
-            "tasks": [
-                {"id": "example", "agent": "ExampleAgent", "params": {}}
-            ]
+            "tasks": [{"id": "example", "agent": "ExampleAgent", "params": {}}],
         }

@@ -15,6 +15,7 @@ try:
     from langchain.chat_models import ChatOpenAI
     from langchain.chains import LLMChain
     from langchain.prompts import PromptTemplate
+
     _HAS_LANGCHAIN = True
 except ImportError:
     _HAS_LANGCHAIN = False
@@ -24,15 +25,15 @@ except ImportError:
 _PIPELINE_HEURISTICS = [
     {
         "pattern": re.compile(r"\bonboard\b", re.I),
-        "pipeline_id": "pipeline.onboarding.v0"
+        "pipeline_id": "pipeline.onboarding.v0",
     },
     {
         "pattern": re.compile(r"\banaly(ze|sis)\b.*\bsales\b", re.I),
-        "pipeline_id": "pipeline.analytics.v0"
+        "pipeline_id": "pipeline.analytics.v0",
     },
     {
         "pattern": re.compile(r"\bfeedback\b|\breview\b", re.I),
-        "pipeline_id": "pipeline.feedback.v0"
+        "pipeline_id": "pipeline.feedback.v0",
     },
 ]
 
@@ -48,6 +49,7 @@ Guidelines:
 
 Instruction: {instruction}
 """
+
 
 class Planner:
     """Planner agent produces task graphs from NL instructions."""
@@ -68,7 +70,7 @@ class Planner:
                     "id": rule["pipeline_id"],
                     "trigger_instruction": instruction,
                     "generated_by": "heuristic",
-                    "timestamp": datetime.utcnow().isoformat()
+                    "timestamp": datetime.utcnow().isoformat(),
                 }
         # fallback generic
         return {
@@ -76,9 +78,13 @@ class Planner:
             "trigger_instruction": instruction,
             "generated_by": "heuristic_fallback",
             "tasks": [
-                {"id": "respond", "agent": "LLMResponder", "params": {"note": "No template match; manual design required"}}
+                {
+                    "id": "respond",
+                    "agent": "LLMResponder",
+                    "params": {"note": "No template match; manual design required"},
+                }
             ],
-            "timestamp": datetime.utcnow().isoformat()
+            "timestamp": datetime.utcnow().isoformat(),
         }
 
     # ---------------------------------------------------------------------
@@ -95,7 +101,7 @@ class Planner:
                 "id": f"pipeline.llm.{uuid.uuid4().hex[:6]}",
                 "trigger_instruction": instruction,
                 "generated_by": "llm_non_json",
-                "raw_output": result
+                "raw_output": result,
             }
         graph.setdefault("timestamp", datetime.utcnow().isoformat())
         return graph

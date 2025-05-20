@@ -1,5 +1,6 @@
 import os, json, requests
 
+
 class SlackAPI:
     """Simple Slack adapter using Incoming Webhooks."""
 

@@ -1,5 +1,6 @@
 import os, sqlite3, pandas as pd
 
+
 class SQLTool:
     """Lightweight SQLite adapter for analytics demos."""
 

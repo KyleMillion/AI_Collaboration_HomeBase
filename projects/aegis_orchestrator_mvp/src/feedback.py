@@ -6,14 +6,16 @@ persists variant stats in `feedback.db` (SQLite).
 
 import sqlite3, time
 from prometheus_client import Counter
-from pathlib import Path # Added for Path
+from pathlib import Path  # Added for Path
 
-VARIANT_METRIC = Counter("variant_success_total",
-                         "Success count per variant",
-                         ["pipeline_id", "variant"])
+VARIANT_METRIC = Counter(
+    "variant_success_total", "Success count per variant", ["pipeline_id", "variant"]
+)
 
 # _DB = "/mnt/data/feedback.db" # This path might need to be configurable or relative to the project
-_PROJECT_ROOT = Path(__file__).resolve().parent.parent # projects/aegis_orchestrator_mvp/
+_PROJECT_ROOT = (
+    Path(__file__).resolve().parent.parent
+)  # projects/aegis_orchestrator_mvp/
 _DB_PATH = _PROJECT_ROOT / "data"
 _DB_FILE = _DB_PATH / "feedback.db"
 
@@ -39,21 +41,35 @@ con.commit()
 # This is a bit tricky with global connections, but good practice to consider.
 # For simple scripts, it might be okay, but for long-running apps, manage connections carefully.
 
-def record(pipeline_id: str, variant: str, success: bool, tool_name: str = "N/A", inputs: dict = None, output: dict = None, error_message: str = None):
+
+def record(
+    pipeline_id: str,
+    variant: str,
+    success: bool,
+    tool_name: str = "N/A",
+    inputs: dict = None,
+    output: dict = None,
+    error_message: str = None,
+):
     """Records the outcome of a particular variant execution."""
-    VARIANT_METRIC.labels(pipeline_id, variant).inc() # Prometheus metric
-    
+    VARIANT_METRIC.labels(pipeline_id, variant).inc()  # Prometheus metric
+
     # Ensure inputs/outputs are serializable if they are being stored or logged elsewhere in future.
     # For now, they are mostly for context.
-    
-    print(f"[Feedback Record] Pipeline: {pipeline_id}, Variant: {variant}, Success: {success}, Tool: {tool_name}")
+
+    print(
+        f"[Feedback Record] Pipeline: {pipeline_id}, Variant: {variant}, Success: {success}, Tool: {tool_name}"
+    )
     if error_message:
         print(f"[Feedback Record Error] {error_message}")
 
-    with con: # SQLite database update
+    with con:  # SQLite database update
         cur = con.cursor()
         # Check if row exists
-        cur.execute("SELECT success, failure FROM ab_stats WHERE pipeline = ? AND variant = ?", (pipeline_id, variant))
+        cur.execute(
+            "SELECT success, failure FROM ab_stats WHERE pipeline = ? AND variant = ?",
+            (pipeline_id, variant),
+        )
         row = cur.fetchone()
 
         if row:
@@ -63,18 +79,28 @@ def record(pipeline_id: str, variant: str, success: bool, tool_name: str = "N/A"
                 current_success += 1
             else:
                 current_failure += 1
-            cur.execute("""
+            cur.execute(
+                """
                 UPDATE ab_stats 
                 SET success = ?, failure = ?, updated = CURRENT_TIMESTAMP
                 WHERE pipeline = ? AND variant = ?
-            """, (current_success, current_failure, pipeline_id, variant))
+            """,
+                (current_success, current_failure, pipeline_id, variant),
+            )
         else:
             # Insert new row
             if success:
-                cur.execute("INSERT INTO ab_stats (pipeline, variant, success, failure) VALUES (?, ?, 1, 0)", (pipeline_id, variant))
+                cur.execute(
+                    "INSERT INTO ab_stats (pipeline, variant, success, failure) VALUES (?, ?, 1, 0)",
+                    (pipeline_id, variant),
+                )
             else:
-                cur.execute("INSERT INTO ab_stats (pipeline, variant, success, failure) VALUES (?, ?, 0, 1)", (pipeline_id, variant))
-        con.commit() # Explicit commit after insert/update
+                cur.execute(
+                    "INSERT INTO ab_stats (pipeline, variant, success, failure) VALUES (?, ?, 0, 1)",
+                    (pipeline_id, variant),
+                )
+        con.commit()  # Explicit commit after insert/update
+
 
 def best_variant(pipeline: str, default: str = "default") -> str:
     """
@@ -95,15 +121,20 @@ def best_variant(pipeline: str, default: str = "default") -> str:
     )
     rows = cur.fetchall()
     for v, s, f, r, n in rows:
-        if n >= 20:        # only trust variants with enough data
-            print(f"[Best Variant] For pipeline '{pipeline}', selected '{v}' (rate: {r:.2f}, trials: {n})")
+        if n >= 20:  # only trust variants with enough data
+            print(
+                f"[Best Variant] For pipeline '{pipeline}', selected '{v}' (rate: {r:.2f}, trials: {n})"
+            )
             return v
-    print(f"[Best Variant] For pipeline '{pipeline}', no variant met criteria. Defaulting to '{default}'. Found: {rows}")
+    print(
+        f"[Best Variant] For pipeline '{pipeline}', no variant met criteria. Defaulting to '{default}'. Found: {rows}"
+    )
     return default
+
 
 # Example of how to potentially close the connection (can be tricky with web apps/long running services)
 # import atexit
 # def close_db():
 #     if con:
 #         con.close()
-# atexit.register(close_db) 
+# atexit.register(close_db)

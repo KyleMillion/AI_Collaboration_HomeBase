@@ -10,4 +10,5 @@ prometheus_client>=0.20.0
 pytest>=8.0.0
 python-dotenv>=1.0.0
 requests>=2.31.0
-slack_sdk>=3.35.0 
+slack_sdk>=3.35.0
+black>=24.0.0 
